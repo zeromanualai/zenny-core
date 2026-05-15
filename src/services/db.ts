@@ -1,9 +1,13 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import WebSocket from 'ws';
 import { config } from '../config';
 import { Client } from '../types';
 
 export const supabase = createSupabaseClient(config.supabase.url, config.supabase.serviceRoleKey, {
   auth: { persistSession: false },
+  realtime: {
+    transport: WebSocket as any,
+  },
 });
 
 // Set tenant context before every query
