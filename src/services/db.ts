@@ -1,8 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { config } from '../config';
 import { Client } from '../types';
 
-export const supabase = createClient(config.supabase.url, config.supabase.serviceRoleKey, {
+export const supabase = createSupabaseClient(config.supabase.url, config.supabase.serviceRoleKey, {
   auth: { persistSession: false },
 });
 
@@ -34,7 +34,7 @@ export async function getClientById(id: string): Promise<Client | null> {
   return data as Client;
 }
 
-export async function createClient(clientData: Partial<Client>): Promise<Client | null> {
+export async function createClientRecord(clientData: Partial<Client>): Promise<Client | null> {
   const { data, error } = await supabase
     .from('clients')
     .insert(clientData)
